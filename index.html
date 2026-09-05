@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense &amp; Budget Visualizer</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="calculator.png"/>
+</head>
+<body>
+  <header>
+    <h1>Expense &amp; Budget Visualizer</h1>
+    <button type="button" id="theme-toggle" aria-label="Toggle dark mode">🌙 Dark mode</button>
+  </header>
+
+  <main>
+    <!-- Balance Display -->
+    <section id="balance-display">
+      <h2>Total Spent</h2>
+      <p id="balance-amount">Rp0.00</p>
+      <div id="limit-controls">
+        <label for="limit-input">Spending limit:</label>
+        <input type="number" id="limit-input" placeholder="No limit" min="0.01" step="0.01">
+        <button type="button" id="set-limit-btn">Set</button>
+        <button type="button" id="clear-limit-btn" hidden>Clear</button>
+      </div>
+      <p id="limit-warning" hidden aria-live="assertive">⚠ Over budget!</p>
+    </section>
+
+    <!-- Input Form + Chart (two-column on desktop) -->
+    <div class="main-grid">
+      <section id="input-form">
+        <h2>Add Expense</h2>
+        <form id="transaction-form" novalidate>
+          <div class="form-group">
+            <label for="item-name">Item Name</label>
+            <input type="text" id="item-name" name="item-name" placeholder="e.g. Coffee" maxlength="100" autocomplete="off">
+            <span class="error-message" id="error-name" aria-live="polite"></span>
+          </div>
+          <div class="form-group">
+            <label for="item-amount">Amount</label>
+            <input type="number" id="item-amount" name="item-amount" placeholder="0.00" min="0.01" step="0.01">
+            <span class="error-message" id="error-amount" aria-live="polite"></span>
+          </div>
+          <div class="form-group">
+            <label for="item-category">Category</label>
+            <select id="item-category" name="item-category">
+              <option value="">-- Select --</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Fun">Fun</option>
+            </select>
+            <div id="custom-category-row" style="display:flex;gap:0.5rem;margin-top:0.4rem;">
+              <input type="text" id="new-category-input" placeholder="New category…" maxlength="30" autocomplete="off" style="flex:1;">
+              <button type="button" id="add-category-btn">+ Add</button>
+            </div>
+            <span class="error-message" id="error-category" aria-live="polite"></span>
+          </div>
+          <button type="submit" id="add-btn">Add</button>
+        </form>
+      </section>
+
+      <section id="chart-section">
+        <h2>Spending by Category</h2>
+        <div id="chart-container">
+          <canvas id="spending-chart"></canvas>
+          <p id="chart-empty-msg">No data yet.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Transaction List -->
+    <section id="transaction-list">
+      <h2>Transactions</h2>
+      <ul id="transactions-ul">
+        <!-- Populated by renderList() -->
+      </ul>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
